@@ -1,0 +1,2309 @@
+                                                                            
+                                                                                                             --------------------------
+                                                                                                               ADVANCE JAVA|
+                                                                                                             ---------------------------
+
+    IMPORTANT QUESTIONS
+   -------------------------------------- 
+1. What is JDBC?
+2.What is JDBC Driver or Driver Software?
+3.Components of JDBC?
+    
+                    INTERFACES IN JDBC :
+                   ----------------------------------
+                     Connection
+                     Statement
+                     Prepared Statement
+                     Callable Statement
+                     Result Set
+
+                    CLASSES IN JDBC:
+                   ----------------------------
+
+                     DriverManager
+                     BLOB / CLOB+
+
+4. Steps to connect java with the Database?
+5.What do you mean by statementts and its types?
+6.Difference between Statement and Prepared statement?
+7. What do you mean by DriverManager?
+8.What is the purpose of connection interface?
+9. Explain about Result Statement
+10.Explain about Batch processing?
+11.How many ways we can load or register Driver?
+12.Explain about different types of Execute( ) method?
+
+JDBC
+--------
+ It stands for JavaDatabase Connectivity.
+It helps us to connect Java with Database.
+It is an API,present in Java.sql package
+It is also called as set of Rules or an instruction.
+It helps us to perform database operation like Insert,Update,Delete,Fetch.
+
+What is driver software ?
+-----------------------------------
+•	It is an additional software.
+•	It is consist of implementation class.
+
+MY SQL COMMANDS :
+---------------------------------
+1.	Show databases
+It will list all the data bases to the my sql server 
+2.	CREATE SCHEMA database-name (or) create database database-name
+This command line is used to create a database 
+
+3.	Drop database databasename
+This command is used to delete the database 
+4.	Use database-name
+This command is used to change the data base 
+5.	Show tables
+This line is used to list the all the table present in the data base 
+6.	Insert into table-name values (1,’values’);
+This command is used to insert the value to the table 
+
+7.	Update table-name set name=’amirtha’ where id=1;
+This command is used to update the existing value to the table 
+
+8.	delete from table-name where id=3;
+this command is used to delete the particular value from the table 
+
+DBURL Structure :
+-------------------------
+ Protocol : subprotocol : // sub-name 
+
+1.	Host name 			IP address
+2.	Port Number 			 3306 (my sql)
+3.	DB Name 			                Data Base Name (Employee)
+4.	User name and Password 	
+
+DBURL
+------------
+"jdbc:mysql://localhost:3306/student","root","root"
+
+Protocol:
+------------
+•	Protocol can accept the request from user and take  response from the database (server) and vise versa.
+
+Type of protocol:
+------------------------
+1.	HTTP
+2.	HTTPS
+3.	FTP
+4.	SMPT
+  
+
+  Java.lang package 
+  ------------------------                                                        
+	Java.lang package is implicitly imported to all of the java classes .
+	It is present inside the system library 
+
+   What is JAR file ?
+   ----------------------
+	
+                JAR file consists of bytecode and some necessary files 
+	JAR file is used to transfer the java files 
+	By using this jar file, we can transfer the java code from one package to another package . 
+     
+       Steps to convert the java code into jar file:
+      ------------------------------------------------------
+	Select the java project which code has to be converted to the jar file 
+	Right click  and click the export , a new window will appear on that search the JAR 
+	And select the JAR file under the folder of java 
+	Let it be as it is don’t change anything 
+	And select the place where to store the jar file .  
+
+       Steps to add any jar file into the project (program):
+      -----------------------------------------------------------------
+	Select the project where you want to add the jar file 
+	Right click the selected project ----> click build path ---> click configure build path
+	One window will appear click on the Libraries--------> and select class path.
+	And click on add external jar .
+	And then select the jar file from the system file and open.
+	Finally,the build jar is added inside the project .
+
+       How to connect java with database ?
+       -----------------------------------------------
+         STEPS TO CONNECT JAVA WITH DATABSE:
+        -----------------------------------------------------------------------
+	We want JDBC (Java database connectivity) to connect the java with data base .
+        for this,we have to follow 5 steps :
+
+      1.  Load ( or ) register Driver ----> Driver interface -------->   present inside java.sql.Driver
+      2.  Establish connection-------->     connection interface --------> present inside java.sql.connection
+      3.  Create statements ------>  statement interface -------->   present inside java.sql.connection
+      4.  Execute query    --------->   Result set interface ------->  present inside java.sql.Resultset
+      5.  Close the connection ----------> c.close() in the finally block or the try block
+
+
+     1.Load or Register is done in how many ways ?
+      	we can done in 2 ways 
+
+           1.Implicit 
+          ----------------
+
+                     java.sql.Driver d=new package.mysql.cj.jdbc.Driver();
+
+           2.Explicit
+          ---------------
+	      
+	        Class.forName(“com.mysql.cj.jdbc.Driver”);
+
+      EX:
+     ------
+          public class Student {
+	  public static void main (String [] args){
+		try {
+		Class.forName(“com.mysql.cj.jdbc.Driver”);
+                     }catch (ClassNotFoundException e){
+                    e.printStackTrace();
+                   }
+                 }
+               }
+      
+       
+      2.Establish the connection:
+        ----------------------------------
+	Get the connection :
+           ----------------------------------
+	        To get the connection we need a critical information about DBURL
+        
+        
+        DBURL:
+       --------------
+	DBURL is used to identify database present in RDBMS application
+        
+        Structure of DBURL:
+        -----------------------------
+         a.Host name 
+         b.Port name 
+         c.Database name 
+         d.User name and password 
+
+
+       PROTOCOL:
+      ---------------------
+	Protocol is a set of rule which helps to connect two application in our case java application with RDBMS application .
+	It is mandatory information about database URL.
+	The protocol is used is JDBC.
+ 
+
+   SUB-PROTOCOL:
+   ---------------------------
+     It is also a set of rules which gives inforation about database connectivity mechanism
+     It is mandatory information in the database URL
+     Sub-protocol depend on the RDBMS application used
+     The sub-protcol used is "mysql"
+
+  SUB-NAME:
+  -------------------
+     It will give physical location of RDBMS application
+
+     It consists of 4 parts:
+        
+     1) HOSTNAME:
+        ---------------------
+       
+            It uniquely identifies the computer where RDBMS application is installled, usually it will be IP address in our case we will use localhost since RDBMS AND java application are present in same system
+
+     2)PORT NUMBER:
+       -------------------------
+         It is used to identify each RDBMS application,portnumber differ from one application to another application
+
+     3)DATABASENAME/SCHEME NAME:
+      -----------------------------------------------------
+         It uniquely identofies database presen in RDBMS sever
+
+     4)CREDENTIALS:
+       --------------------------
+         Username & password
+         --------------------------------
+           DBURL eg: jdbc:mysql://localhost:8080/Databasename?user=root&password=root;
+
+
+   CREATE STATEMENT
+   ---------------------------------
+   CATEGORIZATION OF QUERY
+   ----------------------------------------------
+      1) Based on type when value will be given to Query
+          ---------------------------------------------------------------
+      i)Static Query
+           -------------
+                If the values are hardcoded and if there is no placeholders in a query it is called as static Query.
+        
+                Eg:
+              =====
+                  select * from emp;
+                  insert into emp values(1,tom)
+                  update emp set name='name' where 
+                  Delete from emp where id=1
+
+     ii)Dynamic Query
+        --------------
+         If the values for the query is given during the runtme is called as Dynamic Query
+         In dynamic query,we will set th values for placeholder during the execution of the program
+         
+         Eg:
+        ===
+          select * from emp where name=?
+          insert into emp values(?,?)
+          update emp set name=? where id=?
+          delete from emp where id=?;
+
+   STATEMENTS
+   -----------------------
+   Statement is used to carry our "Sql queries" from Java application to RDBMS application
+   We have 3 types of statements, all the statements are "interfaces"
+
+  eg:
+=====
+     java.sql.Statement ---> it is used to carry static query
+     java.sql.PreparedStatement --->  it is used to carry dynamic query
+     java.sql.CallableStatement --->  it is used to carry PL-SQL statement (execute BLOB or CLOB)
+
+  EXECUTE QUERY
+ -----------------------------
+     Methods are used to execute our queries
+    ==============================
+     
+     1) public int executeUpdate(String sql) throws sql Exception ---> UPDATE,DELETE
+  
+     2) public ResultSet execute Query(String sql) throws sql Exception; -----> SELECT
+    
+  DYNAMIC
+  -----------------
+     
+    i)Since the query is dynamic we should use prepared statement interface
+
+    To use prepared Statement interface following method used is
+
+          ----> public java.sql.PreparedStatement 
+                preparedStatement(String sql) throws sqlException;
+     
+     ii) To give the values,during runtime,use settermethod present inside PrepareStatement Object
+          
+         public void setInt(int placeholder-index,int value)
+         public void setString(int placeholder-index,String value)
+         public void setDouble(int placeholder-index,Double value)
+         public void setLong(int placeholder-index,Long value)
+         public void setShort(int placeholder-index,Short value)
+
+
+  CODE TO EXECUTE QUERY
+  -------------------------------------------
+       PreparedStatement p= c.prepareStatement(" insert into movie values(?,?,?,?,?) ");
+
+           p.setString(1, movieName);
+           p.setString(2, hero);
+           p.setString(3, director);
+           p.setString(4, villan);
+           p.setString(5, heroine);
+
+  EXECUTING SELECT TYPE OF QUERY
+  ---------------------------------------------------------
+   Since the query is select type, use following method to execute
+
+             public ResultSet executeQuery (String sql) throws SqlException;
+  
+    The output of select type of query will be in the form of table and it will be given in the form of ResultSet Object
+
+    To fetch data from result set following operation has to be done
+    ---------------------------------------------------------------------------------
+     i) First check next data is present or not using following method 
+        public boolean next() throws sqlException
+
+     The above method returns TRUE, if the next records are present else it will return FALSE
+     If the records are present in the result set, get the data using getter method present inside resultSet Object
+              
+               Methods are as follows 
+              -------------------------
+                public int getInt(int column-Index);
+                public String getString(int column-Index);
+                public double getDouble(int column-Index);
+                public long getLong(int column-Index);
+
+       eg:
+      -----
+         
+         statement s=c.createStaement();
+
+         ResultSet rs= s.executeQuery("Select * from movie");
+         
+         while(rs.next()){
+            System.out.println("MovieName:"+ rs.getString(1));
+            System.out.println("HeroName:"+ rs.getString(2));
+            System.out.println("DirectorName:"+ rs.getString(3));
+            System.out.println("VillanName:"+ rs.getString(4));
+            System.out.println("HeroineName:"+ rs.getString(5));
+               }
+
+          NOTE:
+         -------
+             Column Index always starts from '1'
+             Column Index depend on Result of sql query
+                                 Column 1----> Select sal
+                                 Column 2----> ename from emp;
+
+   CLOSING CONNECTION
+  ---------------------------------------
+            To use the memory efficiently,we must close the connection 
+            To close the connection,following method is used  -----> void close() throws SQLException
+             
+           eg:
+           -----
+                      finally{                                                         
+                      try{                                                         |    NOTE:
+                      {                                                             | -------------    
+                      c.close(); --------------------------------------> |      Conncection can also be closed in the first try block ,but for our understanding we are making use of the finally block
+                     } catch (SQLEception e) {                        |                Because c.close() method will throw a SQLException
+                            e.printStackTrace();                           |
+                                  } 
+                                    }     
+         
+    EXECUTE BATCH
+    ---------------------------
+          It is used to execute multiple queries in single transaction
+    
+        BATCH PROCESSING METHODS
+        -------------------------
+            i) addBatch()
+            ------------------
+               It is used to add the batch.It can be used only for insert,update and delete type of queries
+            
+            SYNTAX:
+            ---------------
+
+             public void addBatch(String query) throws SQLExecption
+         
+            ii) executeBatch()
+               --------------------
+                   It is used to execute Batch
+               
+                    SYNTAX:
+                    --------------
+                       public int[ ] executeBatch() throws SQLException
+            
+            iii) clearBatch()
+                -----------------
+                     It is used to remove all statements from the batch
+                 
+                   SYNTAX:
+                   --------------
+                      public void clearBatch() throws SQLException
+
+  
+
+
+                        STEPS TO CREATE MAVEN PROJECT
+                       ----------------------------------------------------------
+
+     Click on File
+     Go for new File
+     Go for others
+     Search maven and choose maven project
+     Click on check box(Create simple project)
+     Give Group-id (aka package name) ,Artifact id (Project Name)
+     Click on Okay.
+
+ 
+      HOW TO UPDATE MAVEN PROJECT
+     ------------------------------------------------------
+
+      Right click on the project
+     Choose maven
+     Click on update project
+     Choose which project want to update
+     Click on the checkBox called as forced update ------> click on OKAY
+
+      HIBERNATE WITH JPA:
+     ----------------------------------
+
+           HIBERNATE
+        ---------------------
+
+        Hibernate is a JAVA Framework that simplifies the development of Java Application on to interact with the database.
+         It is an open source,lightweight,ORM (Object Relational Mapping) tool.
+        Hibernate implements the specifications of JPA(Java Persistence API) for data persistence
+
+      ADVANTAGES OF HIBERNATE
+    -----------------------------------------------
+         Open Source and Lightweight
+         Fast Performance
+         Database Independent Query
+         Automatic Table Creation
+        Simplifies Complex Join
+
+      HIBERNATE WITH JPA
+     ----------------------------------
+               Java Persistence API(JPA) is a Java Specification that provides certain functionality and standard to ORM tools. 
+               The javax.persistence package contains the JPA classes and interfaces.
+
+      ORM TOOL
+     --------------------
+              An ORM tool simplifies the data creation, data manipulation and data access. It is a programming technique that maps the object as one row in the table in the database.
+          
+                                ------------------------------                     ========                   ----------                                             ~~~~~~~~~~~
+                                | JAVA APPLICATION |  =======> / OBJECT |/  ======> | ORM |  ==================> \ DATABASE \
+                                ------------------------------                    =========                  -----------                                            ~~~~~~~~~~~~
+
+
+ ENTITY MANAGER :
+-------------------------------
+
+            •	Entity manager factory provides instance of Entity manager for connecting to same database . 
+               All the instances are configured to use the same setting as defined by the default implementation . 
+              Several entity manager factories can be prepared for connecting to different data base .
+            •	The Entity Manager inter face present in java.persistence is used to provide an entity  manager
+            •	Persistence – the Persistence is bootstarp class  which is used to obtain an Entity-Manager-Factory 
+
+            •	Entity manager is an interface provided by java persistence API specification 
+            •	Entity manager is used to manage the life cycle of Entity instance such as 
+                              Create and remove persistence entity instance 
+                              Find entity by the primary key 
+                              Query over entities 
+     SYNTAX:
+    ----------------
+
+             EntityManagerFactory emf= persistence .create EntityManagerFactory(“string”);//string =persistence unit name
+
+     Methods present in entity manager :
+    -----------------------------------------------
+                1. persist() - is used to save the instance .
+                2.  merge() - is used to merge the state of even entities given entities into the current persistence contact .
+                3. remove() - is used to remove the instance .
+                4. find() - is used to fetch the entities based on the primary key.
+
+     ENTITY TRANSACTION:
+    -------------------------------------
+                 It is an interface , it is used to control the transaction on resource local entity manager
+ 
+     Important methods :
+    -----------------------------
+
+              1.Begin() - it is used to start the transaction .
+              2.Commit () - it is used to save or commit the transaction .
+
+     JPQL - Java Persistence Query Language :
+    --------------------------------------------------------
+               JPQL stands for Java Persistence Query Language .
+               It is an platform independent object oriented query language .
+               JPQL is used to make queries against entity stored in relational database .
+               It is inspired by SQL .
+
+     NOTE:
+    -----------
+               In JPQL we work with Entities and collections of entities ,while in SQL we work with column and rows 
+
+     EX:
+    -------
+	SQL- Select * from table-name where name=?;
+	JPQL- Select alias-name from entity-class-name alias-name where alias.name=?;
+		Select e from Employee e where e.name=?;
+
+  TYPES OF QUERY PARAMETER
+ ------------------------------------------------
+           Similar to JDBC prepared statement parameters JPA specifies two different way of writing parameterized queries by using 
+   1.Positional parameter
+   2. Named parameter
+
+Difference between Perist and Merge method
+----------------------------------------------------------
+
+--------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                       PERSIST                                                                                                                                                  MERGE                                                                          
+--------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Persist should be called only on new entities                                                                                 |                  Merge is meant to reattach detached entities
+
+It will persist the entity object in database                                                                                     |                  It will update the object in the databse for duplicate key
+
+If you pass the object with duplicate primary key it will throw exception                                        |                   If the primary key is not matched it will insert the object s new record in table.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+MAPPING IN HIBERNATE
+--------------------------------------
+
+   The mapping of association between EntityClasses and Relationship between Table soul of ORM(Object Relational Mapping)
+   Hibernate mapping are one of the key features of hibernate they establish the relationship between two database tables has attributes in your model 
+   You can establish either uni-directional or bi-directional 
+
+DIFFERENT MAPPING ANNOTATIONS ARE:
+----------------------------------------------------------------
+
+@OneToOne(uni-direction)
+
+@OneToMany(uni-direction)
+
+@ManyToOne(uni-direction)
+
+@ManyToMany(uni-direction)
+
+@OneToOne(bi-direction)
+
+@OneToMany(bi-direction)
+
+@ManyToMany(bi-direction)
+
+ONE TO ONE(UNI-DIRECTION)
+--------------------
+   One to one represents that a single entity is associated with a single instancae of the other entity. An instance of a source entity can be at most mapped to one instance of the target entity.
+
+ Eg: One person has one pan,a pan is associated(aka Has-a-relationship) with a single person
+------
+  @Entity
+   public class Pan{
+   @Id
+  @GeneratedValue(strategy = GeneratiionType.IDENTITY)
+  private int id;
+  private string address;
+private String panNumber;
+
+}
+
+ @Entity
+public class Person{
+
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private int id;
+private String name;
+private String email;
+private long phone;
+
+@OnetoOne
+private Pan pan;
+   
+}
+
+BI-DIRECTIONAL
+--------------------------
+ Bi-directional association allows us to fetch details of dependent obhect from both side. In such case, we have the reference of two classes in each other. Let's take an example of same Person and Pan, now Person class has-a-reference of Pan and Pan has a reference of Person.
+  Here,you can retrieve the data in bi-direction,if you have person id you can get pan details and also you can get person details with pan id.
+
+ Eg: One person has one pan,a pan is associated(aka Has-a-relationship) with a single person
+------
+  @Entity
+   public class Pan{
+   @Id
+  @GeneratedValue(strategy = GeneratiionType.IDENTITY)
+  private int id;
+  private string address;
+private String panNumber;
+
+@OnetoOne
+private Person person
+}
+
+ @Entity
+public class Person{
+
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private int id;
+private String name;
+private String email;
+private long phone;
+
+@OnetoOne
+private Pan pan;
+   
+}
+
+ ONE-TO-MANY (or) MANY-TO-ONE MAPPING(UNI-DIRECTION)
+--------------------------------------------------------------------------------------------
+    In one-to-many mapping one enity is associated with many instances of other entity.
+For example one person has many bank accounts.
+   
+    Here you can retrieve the data in uni-direction.If you have person id you can get all the account details and you cannot get person details with account id.
+EX: One person has many accounts,may accounts are associated with asingle person.
+
+@Entity
+public class Account{
+
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private int id;
+private long accNo;
+private String ifscCode;
+}
+
+@Entity
+public class Person{
+@Id
+@GeneratedValue(strategy= GenerationType.IDENTITY)
+private int id;
+private String name;
+private String email;
+private long phone;
+`
+@OnetoMany
+private List<Account> accounts;
+
+}
+
+ONE-TO-MANY (or) MANY-TO-ONE MAPPING(BI-DIRECTION)
+-----------------------------------------------------------------------------------------
+ In bi-direction, in many to one mapping many instance of entity is associated with one instance of other entity. For an example many branches have one hospital . In one-to-many mapping instance of entity is associated with many instance of other entity . for an example one hospital have many branches .
+ Here you can retrieve the data in bi-direction. If you have branch id you can get the hospital details and you can get branch details with hospital id .
+ 
+EX : Many branches are associated with one hospital .
+
+ @Entity
+public class branch {
+
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private int id;
+private String name ;
+private String State;
+
+@ManyToOne
+Private hospital H;
+
+}
+
+@Entity
+public class hospital{
+@Id
+@GeneratedValue(strategy= GenerationType.IDENTITY)
+private int id;
+private String name;
+private long phone;
+
+@OneToMany
+Private List <branch> branch;  
+}
+
+
+MANY TO MANY(UNI-DIRECTION) MAPPING
+------------------------------------------------------------------- 
+ In many-to-many mapping many instances of entity is associated with many instances of other entity. For example many students have many courses.
+ Here you can retreive teh data in uni-direction,if you have student id you can get the all the details of courses but youu cannot get student details with course id.
+
+Ex: Many students are associated with many courses.
+
+@Entity
+public class Course {
+
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private int id;
+private long name;
+private String duration;
+}
+
+@Entity
+public class Person{
+@Id
+@GeneratedValue(strategy= GenerationType.IDENTITY)
+private int id;
+private String name;
+private int age;
+`
+@ManytoMany
+private List<Course> courses;
+
+}
+
+MANY TO MANY(UNI-DIRECTION) MAPPING
+------------------------------------------------------------------- 
+In many-to-many mapping, many instances of entity is associated with many instances of other entity. For example many students have many courses and many courses have many students.
+ Here you can retreive the data in bi-direction,if you have student id you can get the all the details of courses and you can get student details with course id.
+
+Ex: Many students are associated with many courses.
+
+
+@Entity
+public class Course {
+
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private int id;
+private long name;
+private String duration;
+
+@ManytoMany
+private List <Student> students;
+
+}
+
+@Entity
+public class Student{
+@Id
+@GeneratedValue(strategy= GenerationType.IDENTITY)
+private int id;
+private String name;
+private int age;
+`
+@ManytoMany
+private List<Course> courses;
+
+}
+
+PERSISTENCE UNIT IN HIBERNATE
+-----------------------------------------------------
+
+A persistence unit defines a set of all entity classes that are managed by enity manager instance in an application.
+It contains configurations file which is required for connection.
+It consists of url, username, Password.
+It is used to perform actions on database.
+
+CASCADING IN HIBERNATE
+------------------------------------------
+    Cascading is a feature in Hibernate,which is used to manage the state of the mapped entity whenever the state of its relationship owner(superclass) affected.
+When the relationship owner (superclass) is saved/deleted, then the mapped entity associated with it should also be saved/ deleted automatically.
+     
+    When we perform some action on the target entity,the samae action will be applied to the associated entity.
+
+TYPES OF CASCADING 
+------------------------------------
+All JPA-specific cascade operations are represented by the javax.persistence.CascadeType enum containing entries:
+
+ALL
+PERSIST
+MERGE
+REMOVE
+REFRESH
+DETACH
+
+FETCH TYPE
+---------------------
+
+The process of data fetching or loading is callled as FetchType.
+There are 2 types of fetch type ,they are LAZY  and EAGER.
+
+ONE TO ONE -------> Eager
+
+ONE TO MANY -------> Lazy
+
+MANY TO ONE -------> Eager
+
+MANY TO MANY -------> Lazy
+
+LAZY
+---------
+The Fetch.LAZY tells Hibernate to only fetch the related entities from the database when you use the relationship. This is a good idea in general because there's no reason to select entities you don't need for your uses case.
+
+EAGER
+-------------
+The FetchType.EAGER tells Hibernate to get all elements of a relationship when selecting the root entity.
+
+ CACHING IN HIBERNATE
+---------------------------------------
+
+Hibernate caching improves the performance of the application by pooling the object in the cache.It is useful when we have to fetch the same data multiple times.
+
+There are mainly two types of caching:
+   First Level Cache 
+   Second Level Cachessss
+
+FIRST LEVEL CACHE
+----------------------------------
+
+Session Objects holds the first level cache data.
+It is enabled by default.
+The first level cache data will not be available to entire application.
+An application can use many session object.
+                                                                                   ----------------------
+                                                                                   |  DATABASE    |          
+                                                                                   -----------------------
+                                                                                                |
+                                                                                                |
+                                                                                                |
+                                                                                               \/ 
+                                                                           |   First level cache   |
+                                                                           |            ||                 |
+                                                                           |            \/                 |
+                                                                           | Second level cache-|----------> Client
+
+Session Factory object holds the second level cache data. The data stored in the second leel cache will be available to entire application
+But we need to enable it explicitely.
+
+3Steps to enable second level cache:
+-----------------------------------------------
+  1.Add hibernate - ecache dependency.(version should be same as hibernate version)
+  2.Add @cacheble annotation to Entity class.
+ 3.Enable second-level cache by configuring in persistence.xml file.
+
+                                                                                   ---------------------- 
+                                                                                   |  DATABASE    |          
+                                                                                   -----------------------
+                                                                                                |
+                                                                                                |
+                                                                                                |
+                                                                                               \/ 
+                                                                           --------------------------
+                                                                           |   First level cache    |
+                                             Hibernate                |            ||                  |
+                                                                           |            \/                 |
+                                                                           | Session Object------|----> Client
+                                                                           ---------------------------
+                                                                                      |
+                                                                                      |
+                                                                                     \/
+                                                                                Second Level Cache
+
+
+ENTITY MANAGEMENT LIFECYCLE
+------------------------------------------------------
+                                                                                     --------------------------------
+                                                                                     |  TRANSIENT STATE  |
+                                                                                     --------------------------------
+                                                                                     save()      |
+                                                                                     persist()   |
+                                                                        save or Update()   |
+                                                                                   Update( )   |
+                                                                                                   \/
+                                                                                     --------------------------------                                                              
+                                                                                    |  PERSISTENCE STATE  |
+                                                                                     --------------------------------                                                                                                                                                                                                         |  PERSISTENT STATE  |
+  
+TRANSIENT STATE
+-----------------------------
+     The transient state is the initial state of an object.
+     Once we create an instance of POJO class, then the object entered in the transient state.
+      Here,an object is not associated with the session.So, the transient state is not related to any database.
+      Hence, modifications in the data don't affect any changes in the database.
+      The transient objects exist in the heap memory. They are independent of Hibernate.
+
+PERISTENT STATE
+----------------------------
+   soon as the object associated with the Session,it entered in the persistent state.
+   Hence,we can say that an object is in the persistenfe state when we save or persist it.
+   Here, each object represents the row of the databse table.
+   So,modifications in the data make changes in the database.                                                                                                                                                                                             
+
+DETACHED STATE
+---------------------------
+Once we either close the session or clear its cache, then the object entered into the detached state.'
+As an object is no more associated with the session, modifications in the data don't affect any changes in the database.
+However, the detached object still has a representation in the databse.
+If we want to persist the changes made to a detached object, it is required to reattach the application to a valid Hibernate session.
+To associate the detached object with the new hibernate session, use any of these methods - load(),merge(), update() or save() on a new 0session with the referene of the detached object.
+
+REMOVED STATE
+---------------------------
+
+It is the last state in the hibernate 
+Whenever the entity object is deleted from the database then the entity object is said to be in removed state.
+It can be achieved by calling remove( ) method.
+
+WEB SERVERS
+------------------------
+ Like any other applications like media player,adobe reader etc.. . Web server is also an application which runs on opertaing system
+Web server has a name implies (''serves request to a web application")
+In other words it helps both browser and web application to interact with each other.
+Hence every web application is directly under the control of web server.
+
+Few examples of web servers : Apache tomcat, Redhair jboss,IBM Web Sphere,Oracle Web Logic etc.,
+
+The server we are going to use is ApacheTomcat
+
+Syntax (or) structure of URL :
+--------------------------------------
+     Protocol://LocalHost:PortNumber/ApplicationName/ResourceFile
+
+SERVLET
+----------------
+
+Servlet is a technology used to create a dynamic web application 
+ It is an API that provides many interfaces and classes.
+It is an interface that must be implemented for creating any servlet 
+It will take request from the user and generate response for that request 
+
+TYPES OF SERVLET
+-------------------------------
+1) Javax.servlet Servlet ----------->Interface
+2)Javax.servlet Generic Servlet -------->abstract class
+3)Javax.servlet.Http  HttpServlet  -------->abstract class
+
+WAYS TO ADD SERVLET
+------------------------------------
+Class A implements Servlet (or) Class A extends Generic Servlet (or) Class A extends HttpServlet
+
+Servlet is an interface in javax.servlet package.
+
+It has  abstract methods.
+
+  1)init( )
+  2) service( )
+  3) destroy( )
+  4) getServletinfo( )
+  5) getServletConfig( )
+
+You can create a servlet by implementing the Servlet interface and providing the implementation for all these methods.
+
+DEPLOYMENT DESCRIPTOR
+-------------------------------------------
+Another name for web.xml is deployment descriptor.
+
+It is a file used by the servlet container to define which servlet class will be mapped with which URL.
+
+
+ Eg:	<servlet>
+-------		<servlet-name></servlet-name>
+		<servlet-class></servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name></servlet-name>
+		<url-pattern></url-pattern>
+	</servlet-mapping>
+
+QUERY PARAMETER 
+----------------------------------
+It is used to transfer your data from front to back end
+ It will be in the form of key and value pair
+To separate URL from query parameter we use placeholder(?)
+One key and value pair will be separated with (&) Ambersand symbol
+
+Eg:
+-----
+   http://localhost:8080/ServletDemo/add?num1=10&num2=20
+
+GET PARAMETER METHOD
+-------------------------------------------
+
+It is used to fetch the data from URL based on key 
+The return type of get parameter method is string 
+
+       eg:
+           String num1= req.getParameter("num1");
+
+PRINT WRITER 
+-------------------------
+
+It is used to print on browser
+The Print writer object can be obtained with the help of getwriter() present in Servlet Response 
+
+eg:
+  PrintWriter  out= res.getWriter( );
+   out.print( html codes);
+
+GENERIC SERVLET:
+-----------------------------
+•	It is a abstract class in javax.servlet package.
+•	Generic servlet implements Servlet, ServletCongif and Serializable interfaces. it provides the implementation of all methods of these interfaces except the servlet method.
+•	Generic servlet class can handle any type of request so it is protocol-independent.
+•	You can create a servlet by inheriting the GenericServlet class and providing the implementation of the service method. 
+
+
+WEB CONTAINER:
+--------------------------
+•	A web container is the component of a web server that interact with the java servlet.
+•	A web container manages the life cycle of servlets and its maps a URL to a particular servlet while ensuring that the requestor has relevant access right.
+•	Java servlet do not have main method, so a container is required to load them. The servlet gets deployed on the web container. 
+
+
+SERVLET LIFE CYCLE:
+----------------------------------
+•	The web container maintains the life cycle of a service instance. Let’s see the life cycle of the servlet.
+1.	Servlet class is loaded.
+2.	Servlet instance is created.
+3.	Init method is invoded 
+4.	Service method is invoked.
+5.	Destroy method is invoked.
+
+
+
+SERVLET LIFE CYCLE METHODS:
+-------------------------------------------------
+Init ( ) Method:
+-------------------
+•	The web container call the init() method only once after creating the servlet instance.
+•	Init( ) method is used to initialize the servlet.
+
+Ex:
+                          Public void init () throws ServletException {
+                               System.out.println(“Hi I am Init method”);
+                       }
+
+Service ( ) method:
+------------------------
+•	This is the main method to perform the actual task.
+•	It will take request from the user and create response.
+
+Ex:
+           Public void service (Servletrequest req, ServletResponse res)throws ServletException, IOException{
+                          System.out.println(“I am service Method”);
+              }
+
+Destroy ( ) method:
+--------------------------
+•	The web container calls the destroy() method before removing the servlet object from the service.
+
+Ex :
+               Public void destroy ( )  {
+                               System.out.println(“Hi I am destroy method”);
+             }
+
+SERVLET CONTEXT:
+-------------------------------
+•	An object of servletContext is created by the web container at the time of deploying the project. 
+                This object can be used to get configuration information from web.xml file. 
+                There is only one servletContext object per web application.
+•	If any information is shared to many servlet, It is better to provide it from the web.xml file using the <context-param> element.
+
+SERVLET CONFIG:
+----------------------------
+
+•	An object of servletConfig is created by the web container for each servlet. 
+             This object can be used to get configuration information from web.xml file.
+•	If the configuration information is modified from the web.xml file, we don’t need to change the servlet. 
+                So it is easier to manage the web application. if any specific context is modified from time to time.
+
+ADVANTAGES OF SERVLETCONFIG:
+------------------------------------------------------
+•	The core advantage of ServletConfig is that you don’t need to edit the servlet file if information is modified from the web.xml file.
+
+Difference Between ServletConfig and ServletContext
+---------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                          ServletConfig	                                                                                                                                  ServletContext
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ServletConfig is servlet specific.	                                                                            |    ServletContext is for whole application.
+Parameter of servletConfig are present as name - value pair in <init-param>inside<servlet>.     |	Parameter of servletContext are present as name  - value pair in <context-param>which is outside of <servlet> and inside <web-app>
+ServletConfig object is obtained by getServletConfig() method.	                                            |    ServletConfig object is obtained by getServletContext() method.
+Each servlet has got its own ServletConfig object.	                                                            |    ServletConfig object is only one and used by different servlets of the application.
+Use ServletConfig when only one servlet needs information shared by it.	                            |    Use ServletContext when whole application needs information shared by it.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Http Request and Http Response:
+-------------------------------------------
+
+Http Request:
+------------------
+      Status code: 200.404,500.
+      Status Version: 1.0/1.1
+      Http Head: Key and value info about server
+      Http body: response data
+
+
+
+Http Request:
+------------------
+     Verb: Http methods (GET, POST, PUT, DELETE, OPTION)
+     URL:  to identify web resources.
+     HTTP Version: HTTP1.0, HTTP1.1
+     HTTP Head: key and Value pair 
+                            Browser info:
+     Http Body :  Resource Info
+ 
+DISADVATAGES OF GENERIC SERVLET
+----------------------------------------------------------
+
+ Working with Generic Servlet is not that easy because we dont have convenient methods such as doGet(),doPost(),doHead() etc in Generic Servlet that we can use in Http Servlet.
+
+In Http Servlet we need to override particular convenient method for particular request, for example if you need to get information then override doGet(),if we want to send information to server override ofdoPost().However in Generic Servlet we only override service() method for each type of request which is not convenient.
+
+Therefore,it is recommended to use the HttpServlet instead of the GenericServlet.
+
+HttpServlet is easier to work with, and has more methods to work with than GenericServlet.
+
+HTTP SERVLET
+-----------------------
+It is a abstract class in javax.servlet.http package.
+The HttpServlet class extends the Generic Servlet class and implements Serializable interface.It provides http specific methods such as doGet,doPost(),doTrace() etc.
+It is an abstract class with no abstract methods.
+
+HTTP METHODS
+--------------------------
+ There are totally 8 methods,they are
+ Get
+Head
+Post
+Put
+Delete
+Connect
+Options
+Trace
+
+A subclass of HttpServlet must override at least one method,usually one of these:
+
+doGet(),if the servlet supports HTTP GET requests.
+doPost(),for HTTP POST requests.
+doPut(),for HTTP PUT requests.
+doDelete(),for HTTP DELETE 
+init and destroy,to manage resources that are held for the life of the servlet.
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                          GenericServlet                                                                                                                                                                         HttpServlet
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+It is defined by javax.servlet package                                                                                                   |                                      It is defined by javax.servlet.http package  
+
+It describes protocol-independent servlet                                                                                             |                                      It describes protocol-dependent servlet
+
+GenericServlet is not dependent on any particular protocol.It can be used with any                               |                                       HttpServlet is a dependent protocol and is only used eith HTTP protocol
+protocol such as HTTP,SMTP,FTP ,and so on.
+
+All methods are concrete except the service() method.                                                                         |                                       All methods are concrete(non-abstract),service() is non-abstract method,service() can  be replaced by doGet() or
+service() is an abstract method                                                                                                                                                    doPost() methods
+
+The service method is abstract                                                                                                            |                                          The service method is non-abstract
+
+It forwards and includes a request and is also possible to redirect a request                                           |                                        It forwards and includes a request but it is not possible to redirect the request
+                                                                                                                                                        
+GenericServlet doesn't allow session management with cookies and HTTP sessions                               |                                      HTTPServlet allow session management with cookies and HTTP sessions
+
+It is an immediate child class of Servelet                                                                                              |                                               It is an immediate child class of Servelet
+
+GenericServlet is a superclass of HttpServlet.class                                                                                |                                         HttpServlet is a subclass of GenericServlet class
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------.
+
+SERVLET CHAINING
+-------------------------------
+
+If client requests is processed by group of servlets is called as servlet chaining.There are 2 types of servlet chaining 
+1) Forward 
+2)Include                                 |
+                         Request          |    ------------                -----------                 -----------
+    Browser     |------------------> |     |  Servlet | ----------> | Servlet | ----------> | Servlet |
+      Window   |     Response     |     |      1      | <---------- |     2     |  <----------|     3     |
+                     |<-------------------|     -------------               ------------               -----------
+                                               |              BROWSER APPLICATIONS
+REQUEST DISPATCHER:
+------------------------------------
+It is an interface,provides the facility of dispatching requests from one resource to another resource is called as request dispactcher
+There are 2 methods present in request dispatcher 
+1)Include method
+2)Forward method
+
+INCLUDE METHOD
+-----------------------------
+It is used to include the method in the samepage
+
+FORWARD METHOD
+-------------------------------
+It is used to forward the method into another page.
+
+ TOGET METHOD
+---------------------------
+•	In doget () parameter not encrypted 
+•	doGet allows bookmarks 
+•	doGet () is idempotent
+•	in doGet() not changing anything on the server 
+•	doGet() is required information 
+•	in doGet () parameter are appended to URL and sent with header information
+•	doGet () is faster 
+•	in doget () only 1024 character limit
+
+TOPOST METHOD
+-----------------------------
+•	In doPost () parameters encrypted 
+•	doPost () disallow bookmarks 
+•	doPost() area not idempotent 
+•	in doPost () server is expected to remember 
+•	doPost() is provide information 
+•	in doPost () , on the other hand , will send the information through socket back to the webserver and it won’t show in the URL bar.
+•	doPost () slower 
+•	In doPost () doesn’t have  limit
+
+
+COOKIE IN SERVLET
+-------------------------------
+
+A cookie is a small piece of information that is persisted between the multiple client requests.
+A cooke has a name, a single value, and optional attributes such as a comment,path and domain qualifiersm a maximum age, and a version number.
+
+HOW COOKIE WORK
+--------------------------------
+ By default,each request is considered as a new request.In cookies technique,we add cookie with response from the servlet.So cookies is stored In each cache of the browser after that if request is sent by the user cookie is added
+with request by default,thus we recognize the user as the old user.
+
+DRAWBACKS
+----------------------
+It will not work if cookie is disabled from the browser.
+Only textual information can be set in cookie object.
+
+APPLICATION
+-----------------------
+APPLICATION  can be divided into 2 as StandAlone & WebApplication
+
+StandAlone can be divided with mobile and desktop 
+
+WebApplication can be divided into 2 as static and Dynamic
+
+Dynamic can be divided into 2 as User Dependent(gmail,social media app) and User Independent(google search,youtube,maps)
+
+SESSION
+---------------
+A particular interval of time is called as session
+
+SESSION TRACKING
+--------------------------------
+Maintaining the state of the user for particular interval of time or between login and logout is callled as session tracking 
+
+TYPES OF SESSION TRACKING
+-----------------------------------------------
+1) URL  REWRITING
+2) HIDDEN FORM  FIELD 
+3) COOKIES
+4) HTTPSESSION
+
+ HTTP SESSION
+------------------------
+
+* HHP will follows Stateless Protocol. (No relationship between the request )
+
+To achieve the relationship, we willl use HTTPSESSION
+ (1) Maintaring the The relationship series of request.
+2) uniqly indentifies each user.
+
+How to Create the session?
+-----------------------------------
+
+Create the session (login time)
+
+
+Create the object of HttpSession
+
+Httpsession session = req.getSession();
+
+Httpsession session = req.getSession(true);
+
+
+HttpSession Session-hop getSession(teme);
+
+→ Container will Create unique value (session id)
+ → it will get the Session id as active 
+→ Create a Cookie by JSESSIONID-Session id.
+
+How to validate the session
+-----------------------------------
+Validate the Session (every request after Login) 
+
+Check request are sent Same user or not.
+
+HttpSession session =req.getsession(false);
+
+How to Invalidate the Session
+---------------------------------------
+ Imalidate the session (logout time)
+
+ Session invalidate();
+
+Different ways of transferring the data - 
+--------------------------------------------------
+
+Query String → Frontend ---> Backend → Key---> value. (String)
+
+Cookies -----> Stored in Browser ---------> Key---> value. (String)
+
+Servlet config   |------------->
+                                                   XML ------> Java -------> Key---> value. (String)
+Servlet context |------------->
+
+ATTRIBUTES
+--------------------
+Transferring the java Object from one servlet to another Servlet,it will also be in the form of Key & Value Pair
+
+There are three types of attributes 
+
+ (i) Context attribute → Application scope
+
+(ii) Request attribute---> Request Scope 
+
+(iii) Session attribute ----> session scope 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+SERVLET QUESTIONS
+---------------------------------
+What is servlet?
+Servlet lifecycle
+what is webcontainer
+what is deployment descriptor
+diff between servlet context and servlet config
+diff between HttpServlet and GenericServlet
+diff between doget and dopost
+servlet chaining
+session
+session tracking or session management and its types 
+diff btwn send redirec and request dispatcher
+diff btwn forward and include method
+cookies
+diff btwn cookies and Httpsession
+Http session
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+MVC ARCHITECTURE
+----------------------------------
+
+          MODEL            <------------------->    DATABASE                                      VIEW 
+         ------------                                          -----------------                                    ------------
+Select * from students;                                                                                    <Body>   <h1> Student</h1>  </body>
+                 | (to and fro)                                                                                                               |
+                 |                                                                                                                |  (to and fro)
+                 |<------------>   CONTROLLER <--------------------------------------------------> |  (Fetch student presentation)
+ (fetch student data)        -----------------------
+                                         if(success){
+                                           Display.Student
+                                                 }
+                                                 |
+                                                 |       (Request & Response)
+                                                 |<----------------------------------------->  END USER
+                                                                                                         -----------------
+
+
+MVC architecture is a design pattern that separates application into 3 main logical components,they are
+
+Model
+View 
+Controller
+
+FEATURES OF MVC
+------------------------------
+It provides clear separation of bussiness logic,UI logic and input logic
+
+It  is a powerful URL mapping components using which we can develop application method
+
+COMPONENTS OF MVC
+------------------------------------
+There are 3 components in MVC, they are
+MODEL
+VIEW 
+CONTROLLER
+
+CONTROLLER
+---------------------
+  It is the component that enables the connection between view and model, so it acts as intermediary
+
+VIEW
+---------
+It is used for all the UI logic of application
+
+MODEL
+-------------
+The model component corresponds to all the data related logic that users works.
+
+JAVA SERVER PAGE(JSP)
+------------------------------------
+It is a server side technology used to create a dynamic typed web application.
+In JSP tags are used to insert java code into html pages
+It is an advanced version of servlet 
+JSP is first converted into servlet by JSP container before processing the client request.
+
+JSP TAGS
+----------------
+There are 3 types of Jsp tags
+i) Scriplet tags <% Java codes %>
+ii)Declaration tags <% !   %> (Declare method or variables)
+iii)Expression tags <% =   %>(to print)
+iv) Directive tags  <% @  %> (for importing the packages)
+
+
+JSP LIFECYCLE
+------------------------
+i)Transulation of Jsp
+ii)Compilation of Jsp
+iii)Servlet class loaded
+iv)Servlet class object created
+v) JSP init( ) invoked
+vi)JSP service( ) invoked according to the number of requests
+vii)JSP Destroy( ) invoked
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                    JSP SCRIPTLET TAG                                                                                                                                      JSP DECLARATION TAG
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+JSP scriptlet tag can only declare variables and not methods                                |                          JSP declaration tag can declare variables aswell as methods
+The declaration of scriptlet tag is placed inside service method                            |                          Declaration of JSP declaration tag is placed outside the service method
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                         SERVLET                                                                                                                                JSP
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Servlet is a java code                                                                                                       |                                     JSP is HTML Tags
+It acts as controller in MVC architecture                                                                           |                                JSP will act as view in MVC architecture
+Servlet is faster                                                                                                                |                                JSP is slower than servlet because first step in the JSP is a transulation of java code and combine
+In servlet we can override service method                                                                         |                                In JSP we cannot override service method
+Writting code for servlet is harder than JSP as it is HTML in Java                                      |                                 JSP is easy to code as it is java in HTML 
+Session management is not enabled by default.User has to enable it explicitly                     |                                 In JSP session management is automatically enabled
+In servlet we dont have any implicit object                                                                        |                                 In JSp there are 9 implicit objects
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+9 implicit objects in JSP 
+
+JSP Writer ----->Out
+HttpSession -----> session
+servlet Config ------>config
+servlet context -------> application
+HttpServletRequest --------> request
+HttpServletResponse --------> response
+PageContext -----------------> page context
+Throwable ---------------> Exception
+
+SCOPE
+------------
+
+OBJECT SCOPE
+------------------------
+There are 4 types  of scope in jsp,
+1) Page Scope
+        --->within the JSP pages
+2)Request Scope
+      ----> during req Object is created
+      ---->during resp Object is destroyed
+3)Session Scope
+      ---->during login Object is created
+      ---->during logout Object is destroyed
+4)Application Scope 
+      -----> any where inside application 
+
+ OBJECTS              SCOPES
+--------------             -------------- 
+JSP Writer              - Page
+ HttpSession           -Session
+servlet Config         - Page
+servlet context        - application
+HttpServletRequest - Request
+HttpServletResponse - Request
+PageContext             - Page
+Throwable                - Page
+
+HTTP SESSION IN SERVLET 
+-----------------------------------------
+Http session is an interface in javax.servlet package
+Request.getSession() will return you httpsession object 
+By using setAttribute of httpsession you can set one session in key-value pair.
+getAttribute of httpsession give you back the session 
+
+SINGLETON DESIGN PATTERN (or) SINGLETON CLASS
+---------------------------------------------------------------------------------
+Creating only one instance of a class is called as singleton design pattern 
+
+DESIGN PATTERN
+---------------------------
+It is a general repeatable solution for commonly acquring problem 
+eg:
+ dependency induction 
+  Factory design pattern
+ Singleton design pattern 
+Implicitly spring will follow singleton design pattern 
+
+SINGLETON DESIGN PATTERN:
+----------------------------------------------
+Rules for developing singleton pattern
+1) Declare the constructor as private
+2)If a constructor is private we cannot create object outside the class
+3)Declare a private static non-primitive reference variable
+4)Declare a public static helper method,which will create only one instance and return that instance
+
+
+PROGRAM
+-----------------
+public class Pancard {
+
+         //declare constructor 
+         private Pancard() {
+           
+        }
+
+        //non primitive
+         private static Pancard p; //nulls
+
+        //helper method
+         publilc static Pancard getInstance( ) {
+       
+              if (p=null) {
+               p= new Pancard();
+                return p;
+                }
+                return p;
+ }
+
+//main method class
+class DriverPancard{
+
+public static void main(){
+
+      Pancard p= Pancard.getInstance();
+      system.out.println(p); //address will be printed
+
+      Pancard p1= Pancard.getInstance();
+      system.out.println(p1);// same address
+
+      Pancard p2= Pancard.getInstance();
+      asystem.out.println(p2);
+  
+        }
+  }
+----------------------------------------------------------------------------------------------------------------------------
+
+//another way 
+    public class Aadharcard {
+     int aid= 1234;
+
+     private Aadharcard(){
+
+     }
+
+          private static Aadharcard a;
+
+                static{
+                   a=new Aadharcard();
+                   }
+
+           private static Aadharcard getInstance(){
+                    return a; 
+                              }
+//driverclass
+
+             public class Mainclass{
+
+                    public static void main(String [ ] args){
+
+                             Aadharcard a1 = Aadharcard.getInstance();
+                           system.out.println(a1);
+                             system.out.println(a1.aid); 
+
+                          Aadharcard a2 = Aadharcard.getInstance();
+                       system.out.println(a2); 
+
+                           Aadharcard a3 = Aadharcard.getInstance();
+                         s system.out.println(a3); 
+ }
+}
+
+
+//PROGRAM FOR COMPARABLE 
+
+public class Product implements Comparable <Product>{
+   String name;
+   Double price;
+   int quantity;   
+}
+
+public Product(String name, double price,int quantity){
+this.name = name;
+this.price = price;
+this.quantity = quantity;
+}
+
+@Override
+public int compareTo(Product o){
+   return o.quantity - this.quantity; //Ascending order
+}
+
+
+@Override
+public int compareTo(Product o){
+   return this.quantity - o.quantity ; // Descending order
+}
+
+public class Driver{
+TreeSet <Product> t= new TreeSet<> ();
+
+Product p1 = new Product("apple mobile",5000,4);
+Product p2 = new Product("redmi mobile",45000,10);
+Product p3 = new Product("samsung",7000,5);
+
+t.add(p1);
+t.add(p2);
+t.add(p3);
+
+System.out.println(t);
+
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+public class Product{
+  String name;
+ Double price;
+int quantity;
+
+//constructor
+public Product(String name, double price,int quantity){
+this.name=name;
+this.price=price;
+this.quamtity=quantity;
+}
+
+@override
+public String toString(){
+return "Product [ name=" + name + '',price="+ price +",quantity= ''+quantity+"]"
+}
+}
+
+//comparator 
+public class SortByAscbasedonquantity implements Comparator<Product>{
+@override
+public int compare(Product o1,Product o2){
+return o1.quanity - o2.quantity; 
+       }
+   }
+
+
+public class SortByDescbasedonquantity implements Comparator<Product>{
+@override
+public int compare(Product o1,Product o2){
+return o2.quanity - o1.quantity; 
+       }
+   }
+
+//Driverclass
+s
+Public class Driver{
+TreeSet <Product> t= new TreeSet<> ();
+
+Product p1 = new Product("apple mobile",5000,4);
+Product p2 = new Product("redmi mobile",45000,10);
+Product p3 = new Product("samsung",7000,5);
+
+t.add(p1);
+t.add(p2);
+t.add(p3);
+
+System.out.println(t);
+}
+
+//Tightly coupled -- run this in the simple project
+
+public class Car{
+
+String name;
+String color;
+double price;
+
+Engine e;
+}
+
+Car(String name,String color,double price,Engine e){
+this.name  = name;
+this.color = color;
+this.price = price;
+this.e = e;
+}
+
+public class Engine{
+}
+
+FRAMEWORK
+------------------------
+SPRING FRAMEWORK
+----------------------------------
+It is an open source light weight framework for building enterprise java application 
+It was developed by Rod Johnson in 2003.
+Spring framework makes the easy development of java2ee(J2EE) applications.
+It is called as frameworks of frameworks because it provides support for various frameworks such as Hibernate, EJB ,struds etc...
+Spring is a dependency injection and inversion of control frameworks.
+With the help of spring framework , we can develop an loosely couple application(Aggregation).
+
+SPRING MODULES
+-----------------------------
+Spring core ==> Features of spring 
+Spring MVC ==> used to develop an monolitihic application 
+SpringRest  ==>used to develop an restful api
+SpringBoot  ==> used to develop web services
+
+IOC (Inversion Of Control)
+-------
+The process of transferring the control of object creation from user to spring framework is called as Inversion Of Control.
+
+DEPENDENCY INJECTION
+--------------------------------------
+If a class depends upon another class for its own object creation then such class is called as dependent class.
+The class which it is dependent upon will be called as dependency class.
+As in spring the programmer doesnot create object(Bean).
+The spring container itself has to create the object of dependency class and inject it into the object of dependent class,this feature of spring is known as dependency feature.
+It is a design pattern to achieve or implement IOC.
+
+DEPENDENCIES
+------------------------
+Dependencies are nothing but data members
+
+TYPES OF DEPENDENCIES
+----------------------------------------
+Primitive 
+Non-primitive
+Collection
+   i)List
+   ii)Set
+   iii)Map
+
+TYPES OF DEPENDENCIES INJECTION
+---------------------------------------------------------
+Setter injection
+constructor injection
+
+SETTER INJECTION
+-------------------------------
+It is a type of dependency injection where setter methods is used to inject the dependency
+Property tag is used inject the dependencies in setter injection.
+
+TYPES OF SETTER INJECTION
+----------------------------------------------
+Value as a tag
+Value as an attribute
+Value as an p schema(property schema)
+
+CONSTRUCTOR INJECTION
+------------------------------------------
+It is a type of dependency injection where constructor is used to inject the dependency.
+<constructor-arg> is used to inject the dependency in the constructor injection.
+
+TYPES OF CONSTRUCTOR INJECTION
+----------------------------------------------
+Value as a tag
+Value as an attribute
+Value as an p schema(constructor schema)
+
+CONFIGUATION
+--------------------------
+the process of configuring the dependency
+
+TYPES OF CONFIGURATION
+-------------------------------------------
+XML based configuration
+Annotation based configuration
+
+`XML BASED CONFIGURATION
+----------------------------------------------
+<beans> </beans> ---> used to cnfig xml file
+<beans> </beans> ---> used to create object
+
+SPRING CONTAINER
+-------------------------------
+Sprirng container is responsible for managing the lifecycle of an object(Bean)Spring
+
+Spring Container does the following task
+i)Create an object 
+ii)Stores the object in the memory
+iii)Manages the object (injecting object to another object)
+
+The Spring container is referred as 
+Application Context
+Bean Factory which is predefined interface
+
+Application  Context:
+----------------------------
+The important implementation class of application Context
+ClassPathXmlApplicationContext("applicationContext.xml")
+fileSystemXmlApplicationContext
+WebApplicationContext
+AnnotationConfigApplicationContext
+
+In setter injection values can be inserted into 3 ways
+i) Value as an tag 
+------------------------
+
+           eg: <bean class="Full qualified Name" id="Reference"> 
+                    <property name=" ">
+                          <value> </value>
+                  </bean>
+
+ii) Value as an attribute
+------------------------------
+          eg: <bean class="Fully qualified Name" id="Reference" >
+                <property name=" " />
+            </bean>
+          
+PROPERTY SCHEMA
+-------------------------------
+eg:
+-----
+<bean class="Fully qualified Name" id="Reference" p:propertyName="value" >
+
+LIST
+--------
+<property>
+<list>
+</list>
+</property>
+
+CONSTRUCTOR INJECTION
+------------------------------------------
+Primitive / Non-primitive Example
+--------------------------------------------
+<bean id="ref" class="FQCN">
+<constructor-arg name="propertyname" value="ur own value">
+</constructor-arg>
+</bean>
+
+WRAPPER CLASS
+---------------------------
+<bean id="ref" class="FQCN">
+
+<constructor-arg name="propertyname" value="ur own value">
+</constructor-arg>
+</bean>
+
+<bean id="ref" class="FQCN">
+<constructor-arg  name="propertyname">
+<list>
+<value>1</value>
+<value>2</value>
+<value>3</value>
+<value>4</value>
+</list>
+</constructor-arg>
+</bean>
+
+<bean class="" id="">
+<constructor-arg  name="propertyname">
+<set>
+<value>1</value>
+<value>2</value>
+<value>3</value>
+<value>4</value>
+</set>
+</constructor-arg>
+</bean>
+
+<bean  class="" id="" >
+<constructor-arg  name="propertyname">
+<map>
+<entry key="key" value="val"></entry>
+<entry key="key" value="val"></entry>
+</map>
+</constructor-arg>
+</bean>
+
+
+AUTO WIRING
+------------------------
+AUTO WIRING FEATURE
+---------------------------------------
+Auto wiring feature of spring framework enable you to inject the object depenecies implicitly.It use setter (or) constructor arg
+
+Auto wiring cant be used to inject primitive an spring values.It work only based on object reference (or ) not variable
+
+TYPES
+-----------
+
+1) No
+2) By Name
+3) By Type
+4)Constructor
+
+NO
+------
+It is default autowiring mode it means no autowiring by default.
+
+BY NAME
+---------------
+It injects the object dependency according to name of the bean in such case property name and bean name must same.It internally calls setter method
+
+BY TYPE
+--------------
+It injects the object dependency according to type.So property name and bean name can be different,it internally calls setter methods
+
+CONSTRUCTOR
+-------------------------
+It injects the dependency by calling the constructor of the class.It calls the constructor having large number of parameters
+
+AUTO DETECT
+------------------------
+It is deprecated since Spring3.
+
+
+ANNOTATION CONFIGURATION
+-------------------------------------------------
+Annotation:
+---------------
+ An annotation is a tag representing meta data aout classes,Interface,Variables,methods or fields.
+Annotation in java provides additional information to the compiler and the JVM.
+Annotation begin with symbol @ 
+
+
+HIERARCHY OF ANNOTATION IN JAVA
+---------------------------------------------------------
+                                           
+                                                                      java.lang.annotation.Annotation
+                                                                                         |
+                                                                                         |
+                                                                                        \/ 
+                                                                                         |
+                                 Standard(Built-in)Annotations <-------|------------> Custom Annotations
+                                                                                         |
+                                                                                         |
+                                                                                         |
+        General Purpose Annotation(java.lang package)<-------|------------> Meta Annotations(java.lang annotation package)
+                                            |                                                                                 |
+                                            |                                                                                 |
+                                           \/                                                                                \/
+                                 @override                                                                         @Inherited
+                                 @Deprecated                                                                    @Dcoumented
+                                 @SafeVarArgs                                                                  @Target
+                                 @SupressWarnings                                                           @Retention
+                                 @Functional interface                                                       @Repeatable
+
+ANNOTATION
+----------------------
+
+@Component
+-------------------
+ It is class level annotation which is used to create object of the class.A class which is assigned with component annotation is called component class
+
+@Value
+-----------
+It is data members level annotation which is used to inject primtive datatype
+
+@Autowired
+----------------
+It is the data member level annotation, which is used to identify particular dependency as a reference type of dependency and it is used to wire the object of implementation class
+
+@Qualifier
+---------------
+It is data member level annotation which is used to carry the object of the particular implementation class
+
+
+@Qualifier Annotation along with @Autowired can be used to remove the confusion by specifying which exact bean will be wired.
+
+AUTOWIRE USING ANNOTATION
+-------------------------------------------------
+By Name
+-------------
+
+@Component
+public class Person{
+
+@Autowired
+List<String>   names;
+                     ----------
+
+}
+
+@Configuration
+@ComponentScan(basePackages = {"fully qualified Name"})
+public class config{
+
+@Bean
+public List<String> names( ){
+ArrayList <String> al= new ArrayList <String> ( );
+al.add("tom");
+al.add("Jerry");
+al.add("Dinga");
+
+return al;
+         }
+     }
+ }
+
+public class DriverClass{
+
+public static void main (String[ ] args){
+ApplicationContext context = new AnnotationConfigApplicationContext(config.class);
+
+Person p = context.getBean("person",Person.class);
+
+system.out.println(p.names);
+
+      }
+  }
+
+By Type
+-------------
+
+@Component
+public class Person{
+
+@Autowired
+List<String>   value;
+                     ----------
+
+}
+
+@Configuration
+@ComponentScan(basePackages = {"fully qualified Name"})
+public class config{
+
+@Bean
+public List<String> values( ){
+ArrayList <String> al= new ArrayList <String> ( );
+al.add("tom");
+al.add("Jerry");
+al.add("Dinga");
+
+return al;
+         }
+     }
+ }
+
+public class DriverClass{
+
+public static void main (String[ ] args){
+ApplicationContext context = new AnnotationConfigApplicationContext(config.class);
+
+Person p = context.getBean("person",Person.class);
+
+system.out.println(p.values);
+
+      }
+  }
+
+
+AUTOWIRE USING QUALIFIER
+----------------------------------------------
+
+@Component
+public class Person{
+
+@Autowired
+@Qualifier("v")
+List<String> names;
+
+}
+
+@Configuration
+@ComponentScan(basePackages={"fully qualified Name"})
+public class config{
+@Bean
+@Qualifier("v")
+public  List<String>  values( ){
+ArrayList <String> al = new ArrayList<String> ( );
+al.add("pen");
+al.add("paper");
+al.add("pencil");
+return al;
+}
+
+@Bean
+@Qualifier("n")
+public List <String> name( ){
+ArrayList <String> al = new ArrayList <String>( );
+
+al.add("tom");
+al.add("BB");
+al.add("CC");
+}
+}
+
+public class DriverClass{
+
+public static void main(String[ ] args){
+
+ApplicationContext context = new AnnotationConfigApplicationContext(config.class);
+Person p= context.getBean("person",Person.class);
+system.out.println(p.name);
+
+}
+}
+
+@Configuration 
+---------------------
+It is an class level annotation,indicate that an object is a source of bean definition.
+@Configuration classes delared beans through annotation called as @Bean
+
+eg :
+-----
+
+@Configuration
+@ComponentScan(basePackages={"fully qualified Name"})
+
+public class config{
+
+@Bean
+public Object m1( ){
+
+return new Object( );
+     
+       }
+}
+
+@ComponentScan
+--------------------------
+In Spring component scan which is used along with the @Configuration annotation to specify the packages that we want to be scanned 
+@ComponentScan without argument tells spring to scan the current packages and all of its subpackages
+
+
+
+LIFECYCLE OF SPRING 
+-------------------------------------
+Spring lifecycle is managed by spring container
+Spring container is the core of spring framework 
+Spring container will get executed when we run the program
+Spring container will create an instance as per request
+Spring will inject the dependencies
+
+INIT( ) METHOD
+------------------------
+It is used to initialize the object.
+Init method is called,after injecting the dependencies by spring container
+
+DESTROY( ) METHOD
+---------------------------------
+It is used to destroy bean object
+Destroy method is called before closing the JVM
+
+         Container Started ------> Bean instantiated -------> Dependencies Injected -------> Custom init( ) method  -----> Custom utility  -------> Custom destroy( ) method
+
+@PostConstruct
+-----------------------
+Post construct annotation is used on a method,that needs to be executed after dependency injection is done to perform any initialization
+This method must be invoked before the class is put into service
+
+@Predestroy
+-----------------
+The predestory annotation is used ona method as a callback notification to the signal that instance is in the process of being removed by the container
+
+@Scope
+-------------
+This Spring annotation is used to specify a bean lifecycle
+It can be used to define the lifecycle of a bean as 
+1) Singleton
+2)Prototype
+3)Request
+4)Session 
+5)GlobalSession
+
+SINGLETON
+-------------------
+A Single bean definition to a single object instance per Spring IOC container.
+
+PROTOTYPE
+-------------------
+Prototype scopes a singlebean definition to any number of object instance.
+
+REQUEST
+---------------
+Scopes a single bean definition to the lifecycle of single http request ie each and every http request will have its own instance of a bean created of the back of singlebean definition
+only valid in the context of an web-aware spring application context.
+
+SESSION
+--------------
+Scopes a single bean definiton to the lifecycle of  httpsession only valid in the context of a web-aware spring application context
+
+GLOBAL SESSION
+----------------------------
+Scopes a single bean definition to the lifecycle of a global HTTP session.
+Typically only valid when used in a portlet context.
+Only valid in the context of a web-aware spring applicationcontext.
+
+SPING BOOT
+----------------------
+# Spring boot is a project that is built on the top of spring framework
+# It provieds an easier and faster way to setup configure and run both simple and web based application.
+# It is a spring module that provides rapid application development features to the spring framework. 
+# It is used to create stand alone application that you can just run because it needs minimum configuration.
+# It is used to develop an restful API
+
+Advantages of Spring boot:-
+-------------------------------------
+ 
+# It creates stand-alone application that can be started using Java-jar.
+# It tests web application easily with the helps of different Embedded HTTP servers such as Tomcat,Jetty,etc.We don't need to deploy WAR files.
+# It provides opininated 'starter' POMs to simplify our Maven configuration.
+# It provides  production-ready features such as metrics,health checks,and externalized configuration.
+# there is no requirement for XML configuration.
+# It offers a CLI tools for developing and testing the Spring Boot Application.
+# It offers the number of plug-ins
+# It also minimize writing multiple boilerplate codes (the code that has to be included in many places with little or no alteration),XML configuration,and annotation.
+# It increases productivity and reduce development time.
+
+Difference between Spring and Spring Boot
+ 
+-------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------
+                             Spring                                                                |                                         Spring Boot
+-------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------
+1)Spring is an open-source Lightweight framework widely used to develop enterprise   |1)Spring Boot is built on top of the conventional spring framework,widely used to develop REST APIs.  
+  application                                                                                                               
+2)The most inportant feature of the Spring framework is depndency injection               |2)the most inportant feature of the Spring boot is autoconfiguration.
+3)It helps to create loosely coupled aplication                                                              |3)It helps to create stand-alone application.
+4)To run the spring application,we need to set the server explicity                                 |4)Spring Boot provides embedded servers such as Tomcat and jetty etc.
+5)To run the spring application a deployment descriptor is required                               |5)There is no requirement of deployment descriptor
+6)To create a spring appliction the developers write lots of code.                                  |6)It reduces the lines of codes.
+7)It doesn't provides support for the in-memory database.                                            |7)It provides support for the in-memory database such as H2.
+8)Developers need to write boilerplate codes for smaller tasks.                                      |8) In Spring boot ther is reduction in boilerplate codes.
+9)Developers have to define dependencies manaully in the pom.xml file                         |9) pom.xml file internally handles the required dependencies.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+JSON:-
+-----
+# JSON stands for java script object notation.
+# It is an light weight data inter changing format.
+# It is easy for human to read and write.
+# In JSON one object is enclosed with in curly braces{}.
+# The properties of the object are seperated by(,).
+# The properties are represented in the form of key and value pack.
+# The key and value pack are seperated by (:).
+# the key is the name of the object properties and it is always within double quotes("").
+# The value may or maynot be enclosed within double quotes it depends upon its datatypes.
+
+Example:-
+---------------
+{"id":1,
+ "name":"tom",
+ "age":22,
+ "marks":55.0,
+ "email":"tom@gmail.com",
+ "names":["","",""] 
+}
+
+MICRO-SERVICE:-
+-------------
+ Micro Service is an architecutre that allows the developers to develop and deploy service independenly.Each service running has its own process and this achieves the lightweight model to support business applications.
+
+ADVANTAGES:-
+Micro services offers the following advantages to its developers:-
+# Easy deployment
+# simple scalability
+# Compatable with container
+# Minimum configuration
+# Less production time
+
+Why Spring boot?
+You can choose Spring Boot because of the features and benefits it offers as given here:-
+# It provides a flexible way to configure JAva Beans,XML configurations and Database Transactions.
+# It provides a powerful batch processing and manages REST endpoints.
+# In Spring Boot,everything is auto configured, no manual configurations are needed.
+# It offers annotation-based spring application.
+# Eases dependency management.
+# It includes Embedded Servelt container.
+
+Importatant Annotation in Spring Boot:-
+--------------------------------------------------
+@Component:- Application components and their variants are automatically register as Spring Beans,providing dependency injection,provided you use either
+ @SpringBootApplication or @Componentscan, @Repositry, @Controller and @Service are move specific alternatives to @Component.
+
+@Service:- This is an alternative to @Component that specific you intend to use the class as part of your service layer.However,it doesn't actually implement anything differently than 
+                 @Component
+
+@Controller:- @Controller is a specialized @Component marked as a controller in MVC architecutre
+
+@Repository:-  This annotation marks a class as part of your  data layer for handling storage ,retrieval and search.
+
+@RestController:- @RestConrtoller combines the @Contriller and @Responsebody into a single annotoation.@RestContoller classes return domains instead of views.
+
+@PostMapping:- It maps the HTTP POST request on the specific handler method.it is used to create a web service endpoint that persists data into database.
+
+@GetMapping :- It maps the HTTP GET request on the specific handler method.It is used to create a web service endpoint that fetches the data from the database.
+
+@PutMapping:- It maps the HTTP PUT request on the specific handler method.It is used to create a web service endpoint that create or update the data.
+
+@DeleteMapping:- It maps the HTTP DELETE request on the specific handler method.It is used to create a web service endpoint that Delete a resource
+
+SPRING BOOT
+-----------------------
+@SpringBootApplication Annotation -It is a combination of 3 ANNOTATIONS
+they are 
+@configuration
+@component Scan
+@Enable Auto configuration
+
+
+@CONFIGURATION
+-------------------------------
+It enables @configuration which indicates that the class contain spring bean application.
+
+@ENABLE AUTO CONFIGURATION
+-----------------------------------------------------
+It enables @enable auto configuration,which allows springboot to automatically configure our application based on the dependency we have added to our project.
+This feature is one of the key benefits of the spring boot as it eliminates much of boiler plate configuration codes (ie) required in spring application
+
+For eg: Suppose you added the h2(in memory database dependency in pom.xml ) Spring boot will automatically configure h2 for us.
+
+COMPONENT SCAN
+-------------------------------
+It enables @ComponentScan which tells spring ,where to look for spring managed components  such as controller , service repositry
+
+SPRING APPLICATION.run( )
+------------------------------------------
+
+
+
+
+
+
